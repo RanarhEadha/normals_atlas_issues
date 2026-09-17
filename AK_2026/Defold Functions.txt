@@ -1,0 +1,34 @@
+
+-- flips a sprite if it has a horizontal orientation to the other side if it appears on the left half of the screen
+local function determine_x_position_simple(what) -- give object id
+	print("flipping simple")
+	local x = states.half_screenwidth + offsets -- determine x
+	local is_left = x < states.half_screenwidth -- check is object is on left half of screen
+	local sprite_id = msg.url(nil, what, "sprite") -- get id
+	sprite.set_hflip(sprite_id, is_left) -- flip if left is true
+end
+
+
+
+
+local function button_hover_effects(self, action_id, action)
+	self.buttons = { "start", "quit", } --all buttons this applies to
+	self.default_scale = vmath.vector3(1, 1, 1)   -- Default button scale
+	self.hover_scale = vmath.vector3(1.2, 1.2, 1) -- Enlarged scale on hover
+	local hovered_button = nil
+	for _, button_id in ipairs(self.buttons) do
+		local button_node = gui.get_node(button_id)
+		if gui.pick_node(button_node, action.x, action.y) then
+			hovered_button = button_id
+			gui.set_scale(button_node, self.hover_scale)
+		else
+			gui.set_scale(button_node, self.default_scale)
+		end
+	end
+	if hovered_button and hovered_button ~= self.hovered_button then
+		msg.post("manager:/controller_audio#audio", "play_hover")
+	end
+	self.hovered_button = hovered_button
+end
+
+

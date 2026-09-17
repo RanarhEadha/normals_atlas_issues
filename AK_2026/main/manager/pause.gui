@@ -1,0 +1,27 @@
+script: "/main/manager/pause.gui_script"
+fonts {
+  name: "Rubik"
+  font: "/main/images/fonts/Rubik.font"
+}
+nodes {
+  position {
+    x: 960.0
+    y: 540.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    y: 0.6
+    z: 0.502
+  }
+  type: TYPE_TEXT
+  text: "PAUSE"
+  font: "Rubik"
+  id: "pause"
+  inherit_alpha: true
+  enabled: false
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

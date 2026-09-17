@@ -1,0 +1,40 @@
+local states = require "main.states"
+
+local function enable_pause(self)
+	msg.post("/manager#px_main", "set_time_step", { factor = 0, mode = 0 }) -- sets time for update to zero
+	gui.set_enabled(self.pause_node, true)
+	states.paused = true
+end
+
+local function disable_pause(self)
+	msg.post("/manager#px_main", "set_time_step", { factor = 1, mode = 1 }) -- sets time for update back to normal
+	gui.set_enabled(self.pause_node, false)
+	states.paused = false
+end
+
+
+function on_input(self, action_id, action)
+	if (action_id == hash("key_pause") or action_id == hash("key_p")) and action.pressed then
+		if not states.paused then
+			enable_pause(self)
+		else
+			disable_pause(self)
+		end
+	end
+end
+
+-- makes the game pause automatically when the window loses focus
+local function window_callback(self, event, data)
+	if event == window.WINDOW_EVENT_FOCUS_LOST then
+		enable_pause(self)
+	elseif event == window.WINDOW_EVENT_FOCUS_GAINED then
+		disable_pause(self)
+	end
+end
+
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.pause_node = gui.get_node("pause")
+	window.set_listener(window_callback) 
+end

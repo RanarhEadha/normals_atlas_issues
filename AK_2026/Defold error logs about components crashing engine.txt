@@ -1,0 +1,114 @@
+A log after Defold could not be started. The effect is a counter in the bottom left, Changed Files panel, and the project never finishing loading, requiring shutdown via Task Manager:
+
+2026-07-23 03:52:27.811 306  [JavaFX-Launcher] WARN  javafx - Unsupported JavaFX configuration: classes were loaded from 'unnamed module @389fa4cf'
+2026-07-23 03:52:29.554 2049 [Thread-4] INFO  com.defold.libs.ResourceUnpacker - deleting old unpack dirs from C:\Users\Jennifer\AppData\Local\Defold\unpack
+2026-07-23 03:52:29.563 2058 [Thread-4] INFO  com.defold.libs.ResourceUnpacker - Already unpacked for the editor version f735c12192bf95684e6ae1ae27c400b8170fc6d8
+2026-07-23 03:52:29.564 2059 [Thread-4] INFO  com.defold.libs.ResourceUnpacker - defold.unpack.path=C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64
+2026-07-23 03:52:29.581 2076 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'mouse_capture_shared' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\mouse_capture_shared.dll
+2026-07-23 03:52:29.582 2077 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'jogl_desktop' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\jogl_desktop.dll
+2026-07-23 03:52:29.582 2077 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'gluegen_rt' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\gluegen_rt.dll
+2026-07-23 03:52:29.583 2078 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'jogl_mobile' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\jogl_mobile.dll
+2026-07-23 03:52:29.585 2080 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'nativewindow_win32' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\nativewindow_win32.dll
+2026-07-23 03:52:29.616 2111 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'nativewindow_awt' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\nativewindow_awt.dll
+2026-07-23 03:52:29.618 2113 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'newt_head' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\newt_head.dll
+2026-07-23 03:52:29.619 2114 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'particle_shared' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\particle_shared.dll
+2026-07-23 03:52:29.619 2114 [Thread-4] INFO  com.defold.libs.ResourceUnpacker - preloaded 8 bundled native libraries from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib
+2026-07-23 03:52:42.186 14681 [Timer-0] INFO  editor.updater - {:line 304, :message "Checking for updates", :url "https://d.defold.com/editor2/channels/stable/update-v4.json"}
+2026-07-23 03:52:42.909 15404 [Timer-0] INFO  editor.updater - {:line 311, :message "No update found"}
+2026-07-23 03:52:54.723 27218 [clojure-agent-send-off-pool-31] INFO  editor.boot - {:line 80, :message "Finished loading editor namespaces.", :namespace-counter 2731}
+2026-07-23 03:52:54.873 27368 [clojure-agent-send-off-pool-31] INFO  internal.low-memory - {:line 55, :message "Adding post-gc low-memory notification listener to tenured generation pool.", :threshold-megabytes 11008}
+2026-07-23 03:52:56.562 29057 [clojure-agent-send-off-pool-31] INFO  editor.defold-project - {:line nil, :message "Initial resource sync completed in 223.65 ms"}
+2026-07-23 03:52:58.412 30907 [clojure-agent-send-off-pool-31] INFO  editor.defold-project - {:line 400, :message "Cached loaded save data in system cache.", :total 63, :retained 63, :unretained 0, :limit 20000}
+2026-07-23 03:52:58.968 31463 [clojure-agent-send-off-pool-31] INFO  editor.defold-project - {:line nil, :message "Project loaded", :allocated "99.97 MB"}
+2026-07-23 03:53:01.677 34172 [JavaFX Application Thread] INFO  util.http-server - {:line 389, :msg "Http server running", :local-url "http://localhost:49950"}
+2026-07-23 03:53:01.776 34271 [clojure-agent-send-off-pool-31] INFO  editor.boot-open-project - {:line 454, :message "project loaded"}
+2026-07-23 03:53:01.800 34295 [clojure-agent-send-off-pool-31] INFO  editor.boot-open-project - {:line nil, :message "Project loading completed in 6.92 s"}
+
+=========================
+
+After crashing when trying to open a font component to assign a font file:
+
+2026-07-24 00:33:51.546 21612405 [Timer-0] INFO  editor.updater - {:line 304, :message "Checking for updates", :url "https://d.defold.com/editor2/channels/stable/update-v4.json"}
+2026-07-24 00:33:51.724 21612583 [Timer-0] INFO  editor.updater - {:line 311, :message "No update found"}
+2026-07-24 01:33:51.726 25212585 [Timer-0] INFO  editor.updater - {:line 304, :message "Checking for updates", :url "https://d.defold.com/editor2/channels/stable/update-v4.json"}
+2026-07-24 01:33:51.904 25212763 [Timer-0] INFO  editor.updater - {:line 311, :message "No update found"}
+2026-07-24 02:33:51.912 28812771 [Timer-0] INFO  editor.updater - {:line 304, :message "Checking for updates", :url "https://d.defold.com/editor2/channels/stable/update-v4.json"}
+2026-07-24 02:33:52.093 28812952 [Timer-0] INFO  editor.updater - {:line 311, :message "No update found"}
+2026-07-24 03:33:52.097 32412956 [Timer-0] INFO  editor.updater - {:line 304, :message "Checking for updates", :url "https://d.defold.com/editor2/channels/stable/update-v4.json"}
+2026-07-24 03:33:52.252 32413111 [Timer-0] INFO  editor.updater - {:line 311, :message "No update found"}
+2026-07-24 03:43:55.321 33016180 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1270, :retained 107, :unretained 1163, :limit 20000}
+2026-07-24 03:44:01.193 33022052 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached loaded save data in system cache.", :total 1266, :retained 106, :unretained 1160, :limit 20000}
+2026-07-24 03:44:02.041 33022900 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1268, :retained 106, :unretained 1162, :limit 20000}
+2026-07-24 03:44:21.374 33042233 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached loaded save data in system cache.", :total 1268, :retained 108, :unretained 1160, :limit 20000}
+2026-07-24 03:44:28.293 33049152 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached loaded save data in system cache.", :total 1269, :retained 108, :unretained 1161, :limit 20000}
+2026-07-24 03:44:29.150 33050009 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1270, :retained 108, :unretained 1162, :limit 20000}
+2026-07-24 03:44:30.529 33051388 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached loaded save data in system cache.", :total 1270, :retained 110, :unretained 1160, :limit 20000}
+2026-07-24 03:44:34.419 33055278 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached loaded save data in system cache.", :total 1271, :retained 110, :unretained 1161, :limit 20000}
+2026-07-24 03:46:01.472 33142331 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1305, :retained 110, :unretained 1195, :limit 20000}
+2026-07-24 03:50:27.984 33408843 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1305, :retained 110, :unretained 1195, :limit 20000}
+2026-07-24 03:50:39.940 33420799 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1303, :retained 110, :unretained 1193, :limit 20000}
+2026-07-24 03:50:44.808 33425667 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1305, :retained 110, :unretained 1195, :limit 20000}
+2026-07-24 03:50:49.027 33429886 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1303, :retained 110, :unretained 1193, :limit 20000}
+2026-07-24 03:51:47.090 355  [JavaFX-Launcher] WARN  javafx - Unsupported JavaFX configuration: classes were loaded from 'unnamed module @389fa4cf'
+2026-07-24 03:51:48.897 2162 [Thread-4] INFO  com.defold.libs.ResourceUnpacker - deleting old unpack dirs from C:\Users\Jennifer\AppData\Local\Defold\unpack
+2026-07-24 03:51:48.902 2167 [Thread-4] INFO  com.defold.libs.ResourceUnpacker - Already unpacked for the editor version f735c12192bf95684e6ae1ae27c400b8170fc6d8
+2026-07-24 03:51:48.903 2168 [Thread-4] INFO  com.defold.libs.ResourceUnpacker - defold.unpack.path=C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64
+2026-07-24 03:51:48.924 2189 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'gluegen_rt' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\gluegen_rt.dll
+2026-07-24 03:51:48.925 2190 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'jogl_desktop' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\jogl_desktop.dll
+2026-07-24 03:51:48.927 2192 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'mouse_capture_shared' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\mouse_capture_shared.dll
+2026-07-24 03:51:48.972 2237 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'nativewindow_awt' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\nativewindow_awt.dll
+2026-07-24 03:51:48.974 2239 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'jogl_mobile' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\jogl_mobile.dll
+2026-07-24 03:51:48.975 2240 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'nativewindow_win32' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\nativewindow_win32.dll
+2026-07-24 03:51:48.976 2241 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'newt_head' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\newt_head.dll
+2026-07-24 03:51:48.977 2242 [] INFO  com.defold.libs.ResourceUnpacker - preloaded bundled native library 'particle_shared' from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib\particle_shared.dll
+2026-07-24 03:51:48.978 2243 [Thread-4] INFO  com.defold.libs.ResourceUnpacker - preloaded 8 bundled native libraries from C:\Users\Jennifer\AppData\Local\Defold\unpack\f735c12192bf95684e6ae1ae27c400b8170fc6d8-x86_64\x86_64-win32\lib
+2026-07-24 03:51:59.029 12294 [Timer-0] INFO  editor.updater - {:line 304, :message "Checking for updates", :url "https://d.defold.com/editor2/channels/stable/update-v4.json"}
+2026-07-24 03:52:00.471 13736 [Timer-0] INFO  editor.updater - {:line 311, :message "No update found"}
+
+===========================
+
+After crashing when trying to create a GO component in the Assets Panel for a factory:
+
+2026-07-25 00:26:57.498 21616262 [Timer-0] INFO  editor.updater - {:line 304, :message "Checking for updates", :url "https://d.defold.com/editor2/channels/stable/update-v4.json"}
+2026-07-25 00:26:57.685 21616449 [Timer-0] INFO  editor.updater - {:line 311, :message "No update found"}
+2026-07-25 01:26:57.685 25216449 [Timer-0] INFO  editor.updater - {:line 304, :message "Checking for updates", :url "https://d.defold.com/editor2/channels/stable/update-v4.json"}
+2026-07-25 01:26:57.864 25216628 [Timer-0] INFO  editor.updater - {:line 311, :message "No update found"}
+2026-07-25 02:26:57.865 28816629 [Timer-0] INFO  editor.updater - {:line 304, :message "Checking for updates", :url "https://d.defold.com/editor2/channels/stable/update-v4.json"}
+2026-07-25 02:26:58.047 28816811 [Timer-0] INFO  editor.updater - {:line 311, :message "No update found"}
+2026-07-25 02:41:59.978 29718742 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached loaded save data in system cache.", :total 1283, :retained 112, :unretained 1171, :limit 20000}
+2026-07-25 02:42:09.993 29728757 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1197, :retained 109, :unretained 1088, :limit 20000}
+2026-07-25 02:42:40.433 29759197 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1364, :retained 109, :unretained 1255, :limit 20000}
+2026-07-25 02:42:43.252 29762016 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1362, :retained 109, :unretained 1253, :limit 20000}
+2026-07-25 02:42:59.223 29777987 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached loaded save data in system cache.", :total 1364, :retained 109, :unretained 1255, :limit 20000}
+2026-07-25 02:43:00.923 29779687 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1367, :retained 109, :unretained 1258, :limit 20000}
+2026-07-25 02:43:33.567 29812331 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1556, :retained 109, :unretained 1447, :limit 20000}
+2026-07-25 02:43:59.420 29838184 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1556, :retained 109, :unretained 1447, :limit 20000}
+2026-07-25 02:44:04.288 29843052 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1557, :retained 109, :unretained 1448, :limit 20000}
+2026-07-25 02:44:18.658 29857422 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1559, :retained 109, :unretained 1450, :limit 20000}
+2026-07-25 02:44:31.420 29870184 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1562, :retained 109, :unretained 1453, :limit 20000}
+2026-07-25 02:44:45.649 29884413 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1566, :retained 109, :unretained 1457, :limit 20000}
+2026-07-25 02:45:07.146 29905910 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1568, :retained 109, :unretained 1459, :limit 20000}
+2026-07-25 02:45:17.192 29915956 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1569, :retained 109, :unretained 1460, :limit 20000}
+2026-07-25 02:45:49.166 29947930 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1576, :retained 109, :unretained 1467, :limit 20000}
+2026-07-25 02:45:50.469 29949233 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1578, :retained 109, :unretained 1469, :limit 20000}
+2026-07-25 02:45:57.108 29955872 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1578, :retained 109, :unretained 1469, :limit 20000}
+2026-07-25 02:46:19.120 29977884 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1568, :retained 109, :unretained 1459, :limit 20000}
+2026-07-25 02:46:26.274 29985038 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached compiled build targets in system cache.", :total 1578, :retained 117, :unretained 1461, :limit 20000}
+2026-07-25 02:49:15.195 30153959 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1574, :retained 115, :unretained 1459, :limit 20000}
+2026-07-25 02:51:21.462 30280226 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1571, :retained 112, :unretained 1459, :limit 20000}
+2026-07-25 02:53:10.532 30389296 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1586, :retained 112, :unretained 1474, :limit 20000}
+2026-07-25 02:53:35.306 30414070 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1586, :retained 112, :unretained 1474, :limit 20000}
+2026-07-25 02:53:49.030 30427794 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1696, :retained 112, :unretained 1584, :limit 20000}
+2026-07-25 02:53:51.972 30430736 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1696, :retained 112, :unretained 1584, :limit 20000}
+2026-07-25 02:53:59.479 30438243 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1697, :retained 112, :unretained 1585, :limit 20000}
+2026-07-25 02:54:01.270 30440034 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1698, :retained 112, :unretained 1586, :limit 20000}
+2026-07-25 02:54:06.780 30445544 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1696, :retained 112, :unretained 1584, :limit 20000}
+2026-07-25 02:56:46.246 30605010 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1697, :retained 112, :unretained 1585, :limit 20000}
+2026-07-25 02:56:49.057 30607821 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1698, :retained 112, :unretained 1586, :limit 20000}
+2026-07-25 02:57:14.963 30633727 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1698, :retained 112, :unretained 1586, :limit 20000}
+2026-07-25 02:57:37.110 30655874 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1696, :retained 112, :unretained 1584, :limit 20000}
+2026-07-25 02:57:40.760 30659524 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1696, :retained 112, :unretained 1584, :limit 20000}
+2026-07-25 02:58:31.990 30710754 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1694, :retained 112, :unretained 1582, :limit 20000}
+2026-07-25 02:58:41.845 30720609 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1694, :retained 112, :unretained 1582, :limit 20000}
+2026-07-25 02:59:00.940 30739704 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached written save data in system cache.", :total 1724, :retained 112, :unretained 1612, :limit 20000}
+2026-07-25 02:59:36.423 30775187 [JavaFX Application Thread] INFO  editor.defold-project - {:line 400, :message "Cached loaded save data in system cache.", :total 1725, :retained 114, :unretained 1611, :limit 20000}

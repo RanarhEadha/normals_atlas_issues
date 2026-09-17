@@ -1,0 +1,260 @@
+-- mostly rectangular pieces with solid interiors
+local buildings_solid_walls = {	
+	"buildings_walls (21)",
+	"buildings_walls (24)",
+	"buildings_walls (46)",
+	"buildings_walls (47)",
+	"buildings_walls (48)",
+	"buildings_walls (49)",
+	"buildings_walls (50)",
+	"buildings_walls (56)",
+	"buildings_walls (57)",
+	"buildings_walls (58)",
+}
+
+
+-- irregular pieces with lots of transparent space
+local buildings_wall_deco = {
+	"buildings_walls (1)",
+	"buildings_walls (2)",
+	"buildings_walls (3)",
+	"buildings_walls (4)",
+	"buildings_walls (5)",
+	"buildings_walls (6)",
+	"buildings_walls (7)",
+	"buildings_walls (8)",
+	"buildings_walls (9)",
+	"buildings_walls (10)",
+	"buildings_walls (11)",
+	"buildings_walls (12)",
+	"buildings_walls (13)",
+	"buildings_walls (14)",
+	"buildings_walls (15)",
+	"buildings_walls (16)",
+	"buildings_walls (17)",
+	"buildings_walls (18)",
+	"buildings_walls (19)",
+	"buildings_walls (20)",
+	"buildings_walls (22)",
+	"buildings_walls (23)",
+	"buildings_walls (25)",
+	"buildings_walls (26)",
+	"buildings_walls (27)",
+	"buildings_walls (28)",
+	"buildings_walls (29)",
+	"buildings_walls (30)",
+	"buildings_walls (31)",
+	"buildings_walls (32)",
+	"buildings_walls (33)",
+	"buildings_walls (34)",
+	"buildings_walls (35)",
+	"buildings_walls (36)",
+	"buildings_walls (37)",
+	"buildings_walls (38)",
+	"buildings_walls (39)",
+	"buildings_walls (40)",
+	"buildings_walls (41)",
+	"buildings_walls (42)",
+	"buildings_walls (43)",
+	"buildings_walls (44)",
+	"buildings_walls (45)",
+	"buildings_walls (51)",
+	"buildings_walls (52)",
+	"buildings_walls (53)",
+	"buildings_walls (54)",
+	"buildings_walls (55)",
+	"buildings_walls (59)",
+	"buildings_walls (60)",
+	"buildings_walls (61)",
+}
+local window_pieces = {
+	"buildings_windows (7)",
+	"buildings_windows (8)",
+	"buildings_windows (11)",
+}
+local roofs = {
+	"buildings_roof (1)",
+	"buildings_roof (2)",
+	"buildings_roof (3)",
+	"buildings_roof (4)",
+}
+local trims = {
+	"buildings_trims (1)",
+	"buildings_trims (2)",
+	"buildings_trims (3)",
+	"buildings_trims (4)",
+	"buildings_trims (5)",
+	"buildings_trims (6)",
+	"buildings_trims (7)",
+	"buildings_trims (8)",
+	"buildings_trims (9)",
+	"buildings_trims (10)",
+	"buildings_trims (11)",
+	"buildings_trims (12)",
+}
+
+-- for clearing the buffer
+local function clear_generated_sprites(self)
+	for _, id in ipairs(self.generated_sprites) do
+		go.delete(id)
+	end
+	self.generated_sprites = {}
+end
+
+
+local last_index = nil
+local function random_without_repeat(list)
+	local index = math.random(#list)
+	while index == last_index and #list > 1 do
+		index = math.random(#list)
+	end
+	last_index = index
+	return list[index]
+end
+
+-- creates any atlas sprite from the factory
+local function create_sprite(piece_id, position, scale)
+	local id = factory.create("#buildings_factory", position, nil, nil, scale)
+	local sprite_url = msg.url(nil, id, "sprite")
+	sprite.play_flipbook(sprite_url, hash(piece_id))
+	return id
+end
+
+-- fills the grid with stuff
+local sprite_basic_scaling = math.random(3, 5) / 10
+local base_cell_width, base_cell_height = 60, 80
+local function fill_sprite_grid(self, pieces, rows, columns, options)
+	options = options or {}
+	local origin = go.get_position()
+	local cell_width = options.cell_width or base_cell_width
+	local cell_height = options.cell_height or base_cell_height
+	local min_scale = options.min_scale or options.scale or sprite_basic_scaling
+	local max_scale = options.max_scale or options.scale or min_scale
+	local min_x = options.min_x
+	local max_x = options.max_x
+	local min_y = options.min_y
+	local max_y = options.max_y
+	local z = options.z or 0
+	local start_y = options.start_y or origin.y
+	local jitter_x = options.jitter_x or 0
+	local jitter_y = options.jitter_y or 0
+	local spawn_chance = options.spawn_chance or 1
+	for y = 1, columns do
+		for x = 1, rows do
+			if math.random() <= spawn_chance then
+				local piece = random_without_repeat(pieces)
+				local offset_x = math.random(-jitter_x, jitter_x)
+				local offset_y = math.random(-jitter_y, jitter_y)
+				local scale = min_scale + math.random() * (max_scale - min_scale)
+				local position_x = origin.x + (x - 1) * cell_width + offset_x
+				local position_y = start_y + (y - 1) * cell_height + offset_y
+
+				if min_x then position_x = math.max(min_x, position_x) end
+				if max_x then position_x = math.min(max_x, position_x) end
+				if min_y then position_y = math.max(min_y, position_y) end
+				if max_y then position_y = math.min(max_y, position_y) end
+
+				local position = vmath.vector3(position_x, position_y, z)
+				local id = create_sprite(piece, position, scale)
+				table.insert(self.generated_sprites, id)
+			end
+		end
+	end
+end
+
+-- spawn windows with chance of gaps in the grid, jitter, and guards to not exceed the wall
+local function add_windows(self, rows, columns)
+	local window_rows = math.max(1, math.floor(rows / 2))
+	local window_columns = math.max(1, math.floor(columns / 2))
+	local origin = go.get_position()
+	local min_x = origin.x
+	local max_x = origin.x + (rows - 1) * base_cell_width
+	local min_y = origin.y
+	local max_y = origin.y + (columns - 1) * base_cell_height
+	fill_sprite_grid(self, window_pieces, window_rows, window_columns, {
+		cell_width = base_cell_width * 2,
+		cell_height = base_cell_height * 2,
+		min_scale = 0.22,
+		max_scale = 0.35,
+		z = 0.11,
+		jitter_x = 60,
+		jitter_y = 40,
+		spawn_chance = 0.6,
+		min_x = min_x,
+		max_x = max_x,
+		min_y = min_y,
+		max_y = max_y
+	})
+end
+
+-- add layer of non-solid wall pieces for prettification
+local function juice_up_walls(self, rows, columns)
+	local deco_rows = rows - 3
+	local deco_columns = columns - 2
+	fill_sprite_grid(self, buildings_wall_deco, deco_rows, deco_columns, {
+		cell_width = base_cell_width * 1.5,
+		cell_height = base_cell_height * 1.2,
+		z = 0.1
+	})
+end
+
+-- add roof pieces of less than wall columns
+local function add_roof(self, rows)
+	local roof_count = math.ceil(rows / 2)
+	fill_sprite_grid(self, roofs, roof_count, 1, {
+		cell_width = base_cell_width * 2,
+		start_y = self.roof_y,
+		z = 0.2
+	})
+end
+
+local function add_floor_trims(self, rows, columns)
+	local origin = go.get_position()
+	local trim_every = 2
+	local trims_rows = math.ceil(rows / 2)
+	local trims_columns = math.floor((columns - 1) / 2)
+	fill_sprite_grid(self, trims, trims_rows, trims_columns, {
+		cell_width = base_cell_width * 2,
+		cell_height = base_cell_width * trim_every,
+		start_y = origin.y + (trim_every - 0.5) * base_cell_height,
+		z = 0.2
+	})
+end
+
+-- make wall as solid as possible from the most rectangular pieces
+local function create_solid_wall(self)
+	local wall_rows = math.random(7, 9)
+	local wall_columns = math.random(4, 7)
+	local origin = go.get_position()
+	self.roof_y = origin.y + (wall_columns - 0.5) * base_cell_height
+	clear_generated_sprites(self)
+	fill_sprite_grid(self, buildings_solid_walls, wall_rows, wall_columns)
+	--juice_up_walls(self, wall_rows, wall_columns)
+	--add_roof(self, wall_rows)
+	--add_floor_trims(self, wall_rows, wall_columns)
+	--add_windows(self, wall_rows, wall_columns)
+end
+
+
+function update(self, dt)
+	-- required because sprites update later, it's fine to set to false after start and neevr touch again
+	if not self.layout_pending then return end
+	self.layout_pending = false
+	-- call function to make buildings happen
+end
+
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("reroll") then
+		create_solid_wall(self)
+	end
+end
+
+
+function init(self)
+	print("trying to make street")
+	-- call function to make all this happen
+	self.generated_sprites = {}
+	create_solid_wall(self)
+	self.layout_pending = true
+end

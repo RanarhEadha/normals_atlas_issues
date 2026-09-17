@@ -1,0 +1,20 @@
+-- central script to see all steam achievement in one place
+-- send msg from other script here, note sending script for easier backtracking
+local steam_manager = require "main.steam_manager"
+
+--[[
+-- list steam achievement API names
+]]
+
+
+
+
+function on_message(self, message_id, message, sender)
+	-- receive msg and sets achievement in steam manager
+	-- conditions for achievements are set in scripts
+	if message_id == hash("unlock_any_highscore") then 
+		steam_manager.unlock_achievement("ach_highscore")
+	end	
+	
+	
+end

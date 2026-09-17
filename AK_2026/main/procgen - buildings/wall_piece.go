@@ -1,0 +1,15 @@
+embedded_components {
+  id: "sprite"
+  type: "sprite"
+  data: "default_animation: \"buildings_walls (50)\"\n"
+  "material: \"/main/procgen - buildings/sprite_normal_copy.material\"\n"
+  "textures {\n"
+  "  sampler: \"diffuse\"\n"
+  "  texture: \"/main/images/images - main game/images_building_procgen/buildings.atlas\"\n"
+  "}\n"
+  "textures {\n"
+  "  sampler: \"normal\"\n"
+  "  texture: \"/main/images/images - main game/procgen_normals/buildings_normals.atlas\"\n"
+  "}\n"
+  ""
+}

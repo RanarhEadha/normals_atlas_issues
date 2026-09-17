@@ -1,0 +1,55 @@
+local states = require "main.states"
+local g = require "main.globals"
+
+local function studio_name()
+	local titles = { "title_top", "title_middle", "title_bottom" }
+	for _, n in ipairs(titles) do
+		local node = gui.get_node(n)
+		gui.animate(node, "euler.z", 0, gui.EASING_OUTBOUNCE, 1.2)
+	end
+end
+
+local function animate_tictactoe()
+	local tic = gui.get_node("tictactoe")
+	local pos = gui.get_position(tic)
+	gui.animate(tic, "euler.z", 360, gui.EASING_INCUBIC, 0.6, 1)
+	gui.animate(tic, "position.x", vmath.vector3(-570, pos.y, pos.z), gui.EASING_INCUBIC, 0.6, 1)
+	gui.animate(tic, "scale", vmath.vector3(0.6, 0.6, 1), gui.EASING_INCUBIC, .6, 1)
+	
+end
+
+-- setting the brand colours for each item. Adapt to current game
+local function studio_title()
+	local title_top = gui.get_node("title_top")
+	local title_middle = gui.get_node("title_middle")
+	local title_bottom = gui.get_node("title_bottom")
+	local bg = gui.get_node("bg")
+	local tic = gui.get_node("tictactoe")
+
+	--assign colours from globals
+	gui.set_color(title_top, g.cerise)
+	gui.set_color(title_middle, g.earth_yellow)
+	gui.set_color(title_bottom, g.dark_purple)
+	gui.set_color(tic, g.black)
+	gui.set_color(bg, g.white)
+
+	-- animate elements
+	studio_name()
+	animate_tictactoe()
+	sound.play("/intro#sound")
+	
+	timer.delay(2, false, function()msg.post("manager:/manager", "load_startup")end)
+end
+
+function on_input(self, action_id, action)
+	--skip intro if players press any key
+	if action.pressed then
+		msg.post("manager:/manager", "load_startup")
+	end
+end
+
+function init(self)
+	print("loading studio")
+	msg.post(".", "acquire_input_focus")
+	studio_title()
+end

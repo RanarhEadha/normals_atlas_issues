@@ -1,0 +1,109 @@
+script: "/main/main.gui_script"
+fonts {
+  name: "default"
+  font: "/builtins/fonts/default.font"
+}
+fonts {
+  name: "Rubik"
+  font: "/main/images/fonts/Rubik.font"
+}
+nodes {
+  position {
+    x: 959.0
+    y: 493.0
+    z: 0.8
+  }
+  scale {
+    x: 11.049561
+    y: 12.598896
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "fade-in"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 170.0
+    y: 1010.0
+  }
+  size {
+    x: 200.0
+    y: 80.0
+  }
+  color {
+    x: 0.4
+    y: 0.4
+    z: 0.4
+  }
+  type: TYPE_BOX
+  id: "to_menu"
+  yanchor: YANCHOR_TOP
+  layer: "fields"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Menu"
+  font: "Rubik"
+  id: "text_back"
+  parent: "to_menu"
+  layer: "text"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 458.0
+    y: 1006.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    y: 0.8
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "reroll"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Reroll"
+  font: "Rubik"
+  id: "text_reroll"
+  parent: "reroll"
+  inherit_alpha: true
+}
+layers {
+  name: "fields"
+}
+layers {
+  name: "text"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

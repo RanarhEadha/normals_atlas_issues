@@ -1,0 +1,74 @@
+
+local tutorial_nodes = {}
+local current_tut_index = 1
+local num_tuts = 1
+local skip_pressed = false--for skip button
+local game_started = false--to disable clicks causing input when switching from startup screen
+
+
+local function show_next_popup()
+	-- This function cycles through a series of GUI tutorial popups.
+	-- It enables the next tutorial node while disabling the previous one.
+	-- If the tutorial sequence is skipped, it disables the tutorial UI completely.
+
+	-- Disable the current tutorial node
+	gui.set_enabled(tutorial_nodes[current_tut_index], false)
+
+	-- Move to the next tutorial index
+	current_tut_index = current_tut_index + 1
+
+	if skip_pressed then
+		-- If the tutorial is skipped, disable the UI and notify the manager
+		local text_field = gui.get_node("node")  -- Retrieve the main text field node
+		gui.set_enabled(text_field, false)  -- Hide the text field
+		msg.post("address_the_manager", "message_I_am_done")  -- Notify that the tutorial is finished
+
+	elseif current_tut_index <= num_tuts then
+		-- If there are more panels left, enable the next tutorial node
+		gui.set_enabled(tutorial_nodes[current_tut_index], true)
+
+	else
+		-- If all tutorials have been shown, disable the text field and notify the manager
+		local text_field = gui.get_node("node")  -- Retrieve the main text field node
+		gui.set_enabled(text_field, false)  -- Hide the text field
+		msg.post("address_the_manager", "message_I_am_done")  -- Notify that the tutorial is finished
+	end
+end
+
+
+
+function on_input(self, action_id, action)
+	-- Handles player input, primarily for progressing through the tutorial popups.
+	-- Also detects if the "skip" button is clicked.
+
+	-- Check if a key or input was released
+	if action.released and not game_started then
+			-- Start the game on the first key press
+			game_started = true
+		elseif game_started then
+			-- If the game has started, proceed to the next tutorial popup
+			show_next_popup()
+	end
+
+		-- Check if the player clicked the "skip" button
+	local skip_node = gui.get_node("skip")  -- Retrieve the skip button node
+	if gui.pick_node(skip_node, action.x, action.y) then
+		skip_pressed = true  -- Set the skip flag
+		show_next_popup()  -- Skip to the end of the tutorial
+	end
+end
+
+
+function init(self)
+	-- Initialize tutorial popups and set up input handling.
+
+	msg.post(".", "acquire_input_focus")  -- Enable input detection for this script
+
+	-- Populate the tutorial_nodes table with GUI nodes for each tutorial step
+	for i = 1, num_tuts do
+		table.insert(tutorial_nodes, gui.get_node("text_tut_" .. i))
+	end
+
+	-- Enable the first tutorial popup
+	gui.set_enabled(tutorial_nodes[current_tut_index], true)
+end

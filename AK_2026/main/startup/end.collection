@@ -1,0 +1,14 @@
+name: "end"
+scale_along_z: 0
+embedded_instances {
+  id: "game_end"
+  data: "components {\n"
+  "  id: \"end\"\n"
+  "  component: \"/main/startup/end.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "ally"
+  data: ""
+}

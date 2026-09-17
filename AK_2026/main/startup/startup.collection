@@ -1,0 +1,10 @@
+name: "startup"
+scale_along_z: 0
+embedded_instances {
+  id: "startup_GUI"
+  data: "components {\n"
+  "  id: \"startup\"\n"
+  "  component: \"/main/startup/startup.gui\"\n"
+  "}\n"
+  ""
+}

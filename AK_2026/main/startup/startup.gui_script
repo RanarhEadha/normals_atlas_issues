@@ -1,0 +1,64 @@
+local sliders = require "main.sliders"
+local states = require "main.states"
+local save = require "main.save"
+local newgame = require "main.newgame"
+local g = require "main.globals"
+local U = require "main.utilities"
+
+local function intro_animations()
+	--fade nodes in from black
+	local menu_nodes = {  } --add buttons
+	for _, button in ipairs(menu_nodes) do
+		local node = gui.get_node(button)
+		gui.set(node, "color.w", 0)
+		gui.animate(node, "color.w", 1, gui.EASING_INOUTQUAD, 1)
+	end	
+end
+
+
+
+-- puts a newgame button on start menu
+-- don't forget to fill newgame.lua with blank states!
+local function gameslot_setup()
+	for k, v in pairs(newgame) do
+		states[k] = v
+	end
+	save.reset(newgame)
+end
+
+local function check_for_running_game()
+	if states.game_running then 
+		gui.set_enabled(gui.get_node("newgame"), true)
+		gui.set_text(gui.get_node("start_text"), "Continue")
+	end
+end
+
+function on_input(self, action_id, action)
+	if (action.x) then U.button_hover_effects(self, action, self.buttons) end -- so that buttons don't try to call on button presses, for example
+	if action_id == hash("touch") and action.released then 
+		if gui.pick_node(gui.get_node("start"), action.x, action.y) then
+			msg.post("manager:/manager", "start_pressed")
+			states.game_running = true
+		elseif gui.pick_node(gui.get_node("quit"), action.x, action.y) then
+			msg.post("manager:/manager", "quit_pressed")
+		elseif gui.pick_node(gui.get_node("discord"), action.x, action.y) then
+			sys.open_url("https://discord.gg/gQgmYMM9A9", {target = "_blank"}) -- opens page on new tab
+		elseif gui.pick_node(gui.get_node("newgame"), action.x, action.y) then
+			gameslot_setup()
+		end
+	end
+end
+
+function final()
+	-- end all startup music
+	msg.post("manager:/controller_audio#audio", "stop_music")
+end
+
+function init(self)
+	print("loading startup")
+	msg.post(".", "acquire_input_focus")
+	gui.animate(gui.get_node("fade-in"), "color.w", 0, gui.EASING_LINEAR, 0.2)
+	intro_animations()
+	check_for_running_game()
+	self.buttons = { "start", "quit", "options", "discord" } 
+end

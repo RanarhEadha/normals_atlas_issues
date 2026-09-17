@@ -1,0 +1,135 @@
+local camera = require "orthographic.camera"
+
+local CLEAR_COLOR = hash("clear_color")
+
+local IDENTITY = vmath.matrix4()
+
+local DESIGN_WIDTH = 1920
+local DESIGN_HEIGHT = 1080
+local DESIGN_RATIO = DESIGN_WIDTH / DESIGN_HEIGHT
+
+local WORLD_NEAR = -1000
+local WORLD_FAR = 1000
+
+local function get_letterbox_viewport(window_width, window_height)
+	if window_width <= 0 or window_height <= 0 then
+		return 0, 0, window_width, window_height
+	end
+
+	local window_ratio = window_width / window_height
+
+	local viewport_x = 0
+	local viewport_y = 0
+	local viewport_width = window_width
+	local viewport_height = window_height
+
+	if window_ratio > DESIGN_RATIO then
+		viewport_height = window_height
+		viewport_width = math.floor(viewport_height * DESIGN_RATIO + 0.5)
+		viewport_x = math.floor((window_width - viewport_width) * 0.5)
+	else
+		viewport_width = window_width
+		viewport_height = math.floor(viewport_width / DESIGN_RATIO + 0.5)
+		viewport_y = math.floor((window_height - viewport_height) * 0.5)
+	end
+
+	return viewport_x, viewport_y, viewport_width, viewport_height
+end
+
+local function get_world_projection()
+	return vmath.matrix4_orthographic(
+	-DESIGN_WIDTH * 0.5,
+	DESIGN_WIDTH * 0.5,
+	-DESIGN_HEIGHT * 0.5,
+	DESIGN_HEIGHT * 0.5,
+	WORLD_NEAR,
+	WORLD_FAR
+)
+end
+
+function init(self)
+self.tile_pred = render.predicate({ "tile" })
+self.gui_pred = render.predicate({ "gui" })
+self.text_pred = render.predicate({ "debug_text" })
+self.particle_pred = render.predicate({ "particle" })
+
+self.clear_color = vmath.vector4(
+sys.get_config_number("render.clear_color_red", 0),
+sys.get_config_number("render.clear_color_green", 0),
+sys.get_config_number("render.clear_color_blue", 0),
+sys.get_config_number("render.clear_color_alpha", 1)
+)
+end
+
+function update(self)
+local window_width = render.get_window_width()
+local window_height = render.get_window_height()
+
+if window_width <= 0 or window_height <= 0 then
+return
+end
+
+local viewport_x, viewport_y, viewport_width, viewport_height = get_letterbox_viewport(window_width, window_height)
+
+-- Clear the full window first. Areas outside the fitted game viewport stay black.
+render.set_viewport(0, 0, window_width, window_height)
+render.set_depth_mask(true)
+render.set_stencil_mask(0xff)
+render.clear({
+[graphics.BUFFER_TYPE_COLOR0_BIT] = self.clear_color,
+[graphics.BUFFER_TYPE_DEPTH_BIT] = 1,
+[graphics.BUFFER_TYPE_STENCIL_BIT] = 0
+})
+render.set_depth_mask(false)
+
+render.enable_state(graphics.STATE_BLEND)
+render.set_blend_func(graphics.BLEND_FACTOR_SRC_ALPHA, graphics.BLEND_FACTOR_ONE_MINUS_SRC_ALPHA)
+
+-- Draw world into the fitted 1920x1080 viewport.
+local cameras = camera.get_cameras()
+if #cameras > 0 then
+render.disable_state(graphics.STATE_DEPTH_TEST)
+render.disable_state(graphics.STATE_CULL_FACE)
+render.disable_state(graphics.STATE_STENCIL_TEST)
+
+for _, camera_id in ipairs(cameras) do
+	render.set_viewport(viewport_x, viewport_y, viewport_width, viewport_height)
+
+	local view = camera.get_view(camera_id)
+	render.set_view(view)
+
+	local proj = get_world_projection()
+	render.set_projection(proj)
+
+	local frustum = proj * view
+	render.draw(self.tile_pred, { frustum = frustum })
+	render.draw(self.particle_pred, { frustum = frustum })
+	render.draw_debug3d()
+end
+end
+
+-- Draw GUI normally in full-window screen space.
+render.disable_state(graphics.STATE_DEPTH_TEST)
+render.disable_state(graphics.STATE_CULL_FACE)
+render.enable_state(graphics.STATE_STENCIL_TEST)
+
+render.set_viewport(0, 0, window_width, window_height)
+
+local view = IDENTITY
+render.set_view(view)
+
+local proj = vmath.matrix4_orthographic(0, window_width, 0, window_height, -1, 1)
+render.set_projection(proj)
+
+local frustum = proj * view
+render.draw(self.gui_pred, { frustum = frustum })
+render.draw(self.text_pred, { frustum = frustum })
+
+render.disable_state(graphics.STATE_STENCIL_TEST)
+end
+
+function on_message(self, message_id, message)
+if message_id == CLEAR_COLOR then
+self.clear_color = message.color
+end
+end

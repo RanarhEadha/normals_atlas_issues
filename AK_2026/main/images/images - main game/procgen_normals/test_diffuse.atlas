@@ -1,0 +1,4 @@
+images {
+  image: "/main/images/images - main game/images_building_procgen/buildings_walls (56).png"
+}
+extrude_borders: 2

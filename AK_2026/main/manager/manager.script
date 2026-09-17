@@ -1,0 +1,68 @@
+local camera = require "orthographic.camera"
+local CAMERA_ID = hash("/camera")
+local S = require "main.states"
+local C = require "main.const"
+
+local proxies_loaded = {}
+
+local function clean_proxy_loading()
+	for i, proxy in ipairs(proxies_loaded) do
+		msg.post(proxy, "unload")
+	end
+	proxies_loaded = {}
+end
+
+
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("proxy_loaded") then
+		table.insert(proxies_loaded, sender)
+		msg.post(sender, "enable") --enable all proxies that are loaded
+		msg.post(sender, "acquire_input_focus") --give focus to all loaded proxies; necessary to get drag + zoom to work
+	end
+	if message_id == hash("quit_pressed") then --quit button functionality
+		sys.exit(0)
+	elseif message_id == hash("start_pressed") then
+		clean_proxy_loading()
+		msg.post("#px_main", "load")
+	elseif message_id == hash("load_startup") then
+		clean_proxy_loading()
+		msg.post("#px_startup", "load")
+	end
+end
+
+
+function on_input(self, action_id, action)
+end
+
+--[[
+local function load_savefile()
+	local data = save.load()
+	--load all specific data points here
+end
+]]
+
+local function get_screen_sizes()
+	local _, _, width, height = defos.get_view_size()
+	C.set_screen_size(width, height)
+end
+
+-- recalculate window after resize
+local function window_callback(event, data)
+	if event == window.WINDOW_EVENT_RESIZED then
+		C.set_screen_size(data.width, data.height)
+	end
+end
+
+function init(self)
+	math.randomseed(os.time()) --random needs to be initialised
+	msg.post(".", "acquire_input_focus")
+
+	-- defos.set_fullscreen(true) --requires defOS library
+	window.set_listener(window_callback)
+	get_screen_sizes()
+
+	--msg.post("#px_studio", "load")
+	--msg.post("#px_startup", "load")
+	msg.post("#px_main", "load")
+end
